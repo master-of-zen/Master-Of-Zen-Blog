@@ -1,0 +1,15 @@
+[Unit]
+Description=master-of-zen.ca website caddy
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/caddy run -config /home/david/caddy/Caddyfile
+ExecReload=/usr/bin/caddy reload --config /home/david/caddy/Caddyfile
+Restart=on-failure
+TimeoutStopSec=5s
+LimitNOFILE=1048576
+LimitNPROC=512
+
+[Install]
+WantedBy=multi-user.target

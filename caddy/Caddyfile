@@ -1,0 +1,5 @@
+master-of-zen.xy www.master-of-zen.xyz
+
+encode gzip
+
+reverse_proxy localhost:8000

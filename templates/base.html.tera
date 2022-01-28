@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        {% include "head" %}
+        <title>
+            {% block title %}
+            {{ base.internet_handle }} / {{ kv.title }}
+            {% endblock title %}
+        </title>
+    </head>
+    <body>
+        <div>
+        </div>
+        {% include "navbar" %}
+
+        {% block content %}
+        {% endblock content %}
+
+        {% include "scripts" %}
+        </div>
+        <script data-no-instant>InstantClick.init();</script>
+    </body>
+</html>

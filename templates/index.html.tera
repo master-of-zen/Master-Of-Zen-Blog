@@ -1,0 +1,20 @@
+{% extends "centerpage" %}
+
+{% block centerpage %}
+<h3> {{ base.internet_handle }}  | <a href="#"> Home<span class="sr-only">(current)</span></a></h3>
+<span> {{ base.full_name }} {{ base.web_sep }} {{ base.my_email }} </span>
+<br>
+<br>
+Hey, It's Me.
+<br>
+<br>
+My go-to languages include <b>Python</b>, <b>Rust</b>, <b>Bash</b>.
+Check out my
+or <a href="/github">Github<span class="sr-only">(Github)</span></a> for more details.
+<br>
+<br>
+If you're interested, I blog about random tech related things.
+You can check out my blog
+<a href="/blog">here<span class="sr-only">(blog)</span></a>.
+</div>
+{% endblock centerpage %}
