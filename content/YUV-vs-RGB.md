@@ -1,6 +1,6 @@
 +++
 title = "YUV vs RGB"
-date = 2017-09-24
+date = 2022-04-27
 +++
 
 Here is do comprarison of YUV and RGB.
