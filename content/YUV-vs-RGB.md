@@ -121,7 +121,7 @@ and collage of all planes together.
 **Notice** that all details are concentrated in Y plane.\
 Most of the blue in Cb(strips of clothing), and most of the red in Cr(clothing
 and face).\
-Cb and Cr plains are quite flat and have low contrast.
+Cb and Cr planes are quite flat and have low contrast.
 
 ### Y
 
@@ -140,7 +140,7 @@ Cb and Cr plains are quite flat and have low contrast.
 
 ### Y + Cb + Cr
 
-This is a colage of all plains at their size after subsampling.
+This is a collage of all planes at their size after subsampling.
 
 <img src="/yuv/yuv.png"  width=100% height=100%>
 `ffmpeg -i 1080p.y4m  -filter_complex
