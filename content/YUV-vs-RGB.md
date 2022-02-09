@@ -203,8 +203,8 @@ rgb:\
 
 yuv:\
 `ffmpeg -i 1080p.y4m -vf "extractplanes=y" -pix_fmt gray y.yuv`\
-`ffmpeg -i 1080p.y4m -vf "extractplanes=y" -pix_fmt gray y.yuv`\
-`ffmpeg -i input_video.yuv -vf "extractplanes=y" -pix_fmt gray y.yuv`\
+`ffmpeg -i 1080p.y4m -vf "extractplanes=u" -pix_fmt gray u.yuv`\
+`ffmpeg -i 1080p.y4m -vf "extractplanes=v" -pix_fmt gray v.yuv`\
 
 Compression Commands:
 
