@@ -43,8 +43,8 @@ While 10 bit will give 0-1023.
 
 ### RGB
 
-In case of RGB those planes are <font color="red">Red</font>, <font 
-color="green">Green</font>, <font color="blue">Blue</font>.
+In case of RGB those planes Red,Green,Blue.\
+
 Each plane dimensions are the same and equal to image resolution.
 RGB is really convenient as each channel contains level of intensity of light
 that added together
@@ -64,19 +64,19 @@ Width x Height x Bit depth
 
 Whole image is `6220800` bytes, or `6.2208` megabytes/~`5.9`MiB.
 
-## <font color="red">Red</font>
+## Red
 
 <img src="/yuv/r.png"  width=100% height=100%>
 <img src="/yuv/rc.png"  width=100% height=100%>
 `ffmpeg -i 1080p.png -filter_complex "extractplanes=r" r.png`
 
-## <font color="green">Green</font>
+## Green
 
 <img src="/yuv/g.png"  width=100% height=100%>
 <img src="/yuv/gc.png"  width=100% height=100%>
 `ffmpeg -i 1080p.png -filter_complex "extractplanes=g" g.png`
 
-## <font color="blue">Blue</font>
+## Blue
 
 <img src="/yuv/b.png"  width=100% height=100%>
 <img src="/yuv/bc.png"  width=100% height=100%>
@@ -93,7 +93,8 @@ stored in Y plane (luma) and most of color information of pixels is stored in
 Cb and Cr planes.
 
 Most of the details, contrast, and brightness are moved to Y plane, which leaves
-Cb and Cr planes rather flat and smooth. That would be apparent on planes preview.
+Cb and Cr planes rather flat and smooth. That would be apparent on planes
+preview.
 
 **Subsampling** takes advantage of that by reducing the resolution of Cb and Cr
 planes without significant visual difference for reconstructed image. This is
@@ -105,7 +106,8 @@ width and height in half.\
 
 We can convert PNG image into YUV 4:2:0 with following command:\
 `ffmpeg -i 1080p.png -pix_fmt yuv420p 1080p.yuv`\
-\* **yuv** only contains the data, without information about resolution and subsampling,
+\* **yuv** only contains the data, without information about resolution and
+subsampling,
 so usually **y4m** used instead, which contains headers with such information
 
 Which gives us next resolutions of our planes in this example:
@@ -155,25 +157,35 @@ What is exactly the half of size of RGB image.
 ## Comparing images
 
 Now as we done those steps, let's put planes together and compare images,
-to see how much of visual difference RGB -> YCbCr conversion and subsmapling introduced.\
+to see how much of visual difference RGB -> YCbCr conversion and subsmapling
+introduced.\
 First is oriiginal and second is reconstructed from YCbCr.
 
 <img src="/yuv/1080p.png"  width=100% height=100%>
 <img src="/yuv/1080p_yuv.png"  width=100% height=100%>
 
-Without zooming in and inspecting each image side by side there is little to nothing lost visually.\
-Closer cross-examination could show loss of detail, best seen on colorful parts of the image.\
-Without having reference, it's hard to say that any loss of quality happened, while guaranteeing
+Without zooming in and inspecting each image side by side there is little to
+nothing lost visually.\
+Closer cross-examination could show loss of detail, best seen on colorful parts
+of the image.\
+Without having reference, it's hard to say that any loss of quality happened,
+while guaranteeing
 halving total amount of data used for image.
 
-Furthremore we can employ some tools to measure and show us difference between the images.\
-For example: `butteraugli`, which give us heatmap and score which measure how much images deviate.
+Furthremore we can employ some tools to measure and show us difference between
+the images.\
+For example: `butteraugli`, which give us heatmap and score which measure how
+much images deviate.
 
-Score for this image is:\
+Score for this particular image is:\
 `3.3250269890`\
 `3-norm: 1.519525`\
 
-Heatmap of differences:\
+Which gives us quality difference which you can see
+when encode image into jpeg quality 90-95
+
+Heatmap of differences\
+Where more saturated and red color indicates higher distortion.
 <img src="/yuv/heatmap.png"  width=100% height=100%>
 
 ## Compressability comparison
@@ -181,11 +193,13 @@ Heatmap of differences:\
 As you might notice from the planes, each RGB plane is detailed while
 Cb and Cr planes are quite flat, and don't contain a lot of unique features.\
 That can be exploited by lossless compression.\
-Lossless compression eliminating redundant information, which can be used to reduce
+Lossless compression eliminating redundant information, which can be used to
+reduce
 our data amount even futher.
 
 Let's try to compress each of the planes of RGB and YCbCr losslessly.\
-Each plane is containing only raw data, making each RGB plane is `2073600` bytes,
+Each plane is containing only raw data, making each RGB plane is `2073600`
+bytes,
 and YCbCr planes are `2073600`,`518400`,`518400` bytes respectively.
 
 I will use 2 methods:
@@ -233,9 +247,18 @@ YCbCr - png:\
 `u.png : 518400 -> 117,888 (x4.397)`\
 `v.png : 518400 -> 119941 (x4.322)`\
 
-What is quite interesing, is that even though we already reduced size of Cb, Cr planes,
-their size could be reduced even more than Y plane, and Y plane compressability laying
+What is quite interesing, is that even though we already reduced size of Cb, Cr
+planes,
+their size could be reduced even more than Y plane, and Y plane compressability
+laying
 somewhere in-between RGB planes for both `zstd` and `png`
 
-This gives our small experient result of `2002745` bytes for RGB and `858705` bytes for YCbCr.
+This gives our small experient result of `2002745` bytes for RGB and `858705`
+bytes for YCbCr.
 What is (x3.106) and (x7.244) reduction in size respectively.
+
+## Summing up
+
+YCbCr colorspace is designed with human perception in mind and in a way that
+allows us more efficiently represent and store visually important data.
+Which also on average will greater compression potential than RGB.
