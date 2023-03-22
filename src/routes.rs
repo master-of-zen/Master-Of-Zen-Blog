@@ -72,11 +72,6 @@ fn rss() -> Rss {
     Rss::new(Template::render("blog-rss", context))
 }
 
-#[get("/resume_pdf")]
-fn resume_pdf() -> std::io::Result<NamedFile> {
-    NamedFile::open(get_template("/resume_pdf"))
-}
-
 #[get("/500")]
 fn crash() -> Result<String, Status> {
     Err(Status::InternalServerError)
